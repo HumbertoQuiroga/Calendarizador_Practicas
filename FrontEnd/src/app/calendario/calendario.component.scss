@@ -8,5 +8,17 @@ th {
 }
 
 table.table td:hover {
-    background-color: lightgray;
+    color: rgb(255, 255, 255);
+    background-color: rgb(3, 207, 20);
 }
+
+.disponibilidadNormal{
+    color: rgb(0, 0, 0);
+    background-color: rgb(245, 196, 196);
+}
+
+.disponibilidadVerde{
+    color: rgb(255, 255, 255);
+    background-color: rgb(3, 207, 20);
+}
+

@@ -1,30 +1,45 @@
 <div class="container">
-  <table class="table table-bordered">
+  <div class="form-inline">
+    <form>
+      <div class="row">
+        <div class="col">
+          <input id="id_maestro" max="11" type="text" (change)="buscarMaestro()" class="form-control" placeholder="ID">
+        </div>
+        <div class="col">
+          <input id="nombres_maestro" type="text" class="form-control" placeholder="Nombres">
+        </div>
+        <div class="col">
+          <input id="apellidos_maestro" type="text" class="form-control" placeholder="Apellidos">
+        </div>
+      </div>
+    </form>
+  </div>
+  <table class="table table-bordered" id="table1">
     <thead>
       <tr>
         <th *ngFor="let dia of dias" scope="col">{{dia.dia}}</th>
       </tr>
     </thead>
-    <tbody *ngFor="let disponiblididad of disponibilidades">
-      <tr>
-        <th rowspan="2" scope="row">{{disponiblididad.hora}}</th>     
-          <td (click)="onClick(disponiblididad)"></td>
-          <td (click)="onClick(disponiblididad)"></td>
-          <td (click)="onClick(disponiblididad)"></td>
-          <td (click)="onClick(disponiblididad)"></td>
-          <td (click)="onClick(disponiblididad)"></td>
+    <tbody *ngFor="let disponiblididad of disponibilidades" id={{disponiblididad.id}}>
+      <tr id="0">
+          <th id={{disponiblididad.id}} rowspan="2" scope="row">{{disponiblididad.hora}}</th>
+          <td class={{disponiblididad.disponibilidad[0].datos[0][0].css}} (click)="onClick(disponiblididad, 0,0)" id=1>{{disponiblididad.disponibilidad[0].datos[0][0].dato}}</td>
+          <td class={{disponiblididad.disponibilidad[0].datos[0][1].css}} (click)="onClick(disponiblididad, 0,1)" id=3>{{disponiblididad.disponibilidad[0].datos[0][1].dato}}</td>
+          <td class={{disponiblididad.disponibilidad[0].datos[0][2].css}} (click)="onClick(disponiblididad, 0,2)" id=5>{{disponiblididad.disponibilidad[0].datos[0][2].dato}}</td>
+          <td class={{disponiblididad.disponibilidad[0].datos[0][3].css}} (click)="onClick(disponiblididad, 0,3)" id=7>{{disponiblididad.disponibilidad[0].datos[0][3].dato}}</td>
+          <td class={{disponiblididad.disponibilidad[0].datos[0][4].css}} (click)="onClick(disponiblididad, 0,4)" id=9>{{disponiblididad.disponibilidad[0].datos[0][4].dato}}</td>
       </tr>
-      <tr>
-        <td (click)="onClick(disponiblididad)"></td>
-        <td (click)="onClick(disponiblididad)"></td>
-        <td (click)="onClick(disponiblididad)"></td>
-        <td (click)="onClick(disponiblididad)"></td>
-        <td (click)="onClick(disponiblididad)"></td>
+      <tr id="1">
+        <td class={{disponiblididad.disponibilidad[0].datos[1][0].css}} (click)="onClick(disponiblididad, 1,0)" id=2>{{disponiblididad.disponibilidad[0].datos[1][0].dato}}</td>
+        <td class={{disponiblididad.disponibilidad[0].datos[1][1].css}} (click)="onClick(disponiblididad, 1,1)" id=4>{{disponiblididad.disponibilidad[0].datos[1][1].dato}}</td>
+        <td class={{disponiblididad.disponibilidad[0].datos[1][2].css}} (click)="onClick(disponiblididad, 1,2)" id=6>{{disponiblididad.disponibilidad[0].datos[1][2].dato}}</td>
+        <td class={{disponiblididad.disponibilidad[0].datos[1][3].css}} (click)="onClick(disponiblididad, 1,3)" id=8>{{disponiblididad.disponibilidad[0].datos[1][3].dato}}</td>
+        <td class={{disponiblididad.disponibilidad[0].datos[1][4].css}} (click)="onClick(disponiblididad, 1,4)" id=10>{{disponiblididad.disponibilidad[0].datos[1][4].dato}}</td>
       </tr>
     </tbody>
   </table>
   <div class="container">
-    <button class="btn btn-primary" (click)="crearDisponibilidad()">Generar</button>
-    <button class="btn btn-outline-secondary" style="margin-left: 1%;" routerLink='/'>Descargar</button>
+    <button class="btn btn-primary" (click)="enviarDisponibilidad()">Enviar</button>
+    <!-- <button class="btn btn-outline-secondary" style="margin-left: 1%;" routerLink='/'>Descargar</button> -->
   </div>
 </div>
