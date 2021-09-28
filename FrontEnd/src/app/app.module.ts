@@ -7,6 +7,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistroComponent } from './auth/registro/registro.component';
 import { CalendarioComponent } from './calendario/calendario.component';
 import { MainComponent } from './main/main.component';
+import { MaestrosCrudComponent } from './maestros/maestros-crud/maestros-crud.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { MainComponent } from './main/main.component';
     LoginComponent,
     RegistroComponent,
     CalendarioComponent,
-    MainComponent
+    MainComponent,
+    MaestrosCrudComponent
   ],
   imports: [
     BrowserModule,

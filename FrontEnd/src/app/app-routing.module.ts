@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { RegistroComponent } from './auth/registro/registro.component';
 import { CalendarioComponent } from './calendario/calendario.component';
+import { MaestrosCrudComponent } from './maestros/maestros-crud/maestros-crud.component';
 import { MainComponent } from './main/main.component';
 
 const routes: Routes = [
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'calendarizador',
         component: CalendarioComponent
+      },
+      {
+        path: 'maestros',
+        component: MaestrosCrudComponent
       },
     ]
   }

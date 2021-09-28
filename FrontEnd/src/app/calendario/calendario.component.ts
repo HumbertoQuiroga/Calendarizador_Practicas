@@ -99,7 +99,6 @@ export class CalendarioComponent implements OnInit {
         }).catch((err)=>{
           console.log(err);
         });
-
   }
 
   asignarDisponibilidadPorCodigo(disponibilidad:String){
@@ -125,6 +124,10 @@ export class CalendarioComponent implements OnInit {
         }
       }
      });
+  }
+
+  verListadoMaestros(){
+    this._router.navigateByUrl("/index/maestros")
   }
 
   ngOnInit(): void {
