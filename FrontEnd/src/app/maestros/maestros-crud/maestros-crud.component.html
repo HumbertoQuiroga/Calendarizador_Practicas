@@ -1,4 +1,11 @@
 <div class="container">
+    <div class="input-group">
+        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+          aria-describedby="search-addon" />
+        <button type="button" class="btn btn-primary">Buscar</button>
+      </div>
+</div>
+<div class="container">
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -10,16 +17,17 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr *ngFor="let maestro of maestros">
                 <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                <td>{{maestro.nombres}}</td>
+                <td>{{maestro.id}}</td>
+                <td>true</td>
                 <td>
                     <button type="button" class="btn btn-primary"><i class="far fa-eye"></i></button>
                     <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                 </td>
             </tr>
         </tbody>
-        </table>
-        </div>
+    </table>
+    <button class="btn btn-primary" (click)="atras()">Atras</button>
+</div>

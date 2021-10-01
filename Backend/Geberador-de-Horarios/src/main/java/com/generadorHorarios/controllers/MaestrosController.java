@@ -40,7 +40,7 @@ public class MaestrosController {
     @GetMapping
     public ResponseEntity<List<Maestro>> obtenerTodosLosMaestros(){
         List<Maestro> maestros = maestroServicios.buscarMaestros();
-        return new ResponseEntity<>(maestros, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(maestros, HttpStatus.OK);
     }
     
     @GetMapping("/{id}")
