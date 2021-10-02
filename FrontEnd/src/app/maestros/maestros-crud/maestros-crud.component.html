@@ -1,8 +1,8 @@
 <div class="container">
     <div class="input-group">
-        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+        <input type="search" [(ngModel)]="busqueda" class="form-control rounded" placeholder="Ingresa nombre del maestro" aria-label="Search"
           aria-describedby="search-addon" />
-        <button type="button" class="btn btn-primary">Buscar</button>
+        <button type="button" class="btn btn-primary" (click)="buscarMaestro(busqueda)">Buscar</button>
       </div>
 </div>
 <div class="container">
@@ -18,13 +18,13 @@
         </thead>
         <tbody>
             <tr *ngFor="let maestro of maestros">
-                <th scope="row">1</th>
+                <th scope="row">*</th>
                 <td>{{maestro.nombres}}</td>
                 <td>{{maestro.id}}</td>
-                <td>true</td>
+                <td><i class="fas fa-calendar-check"></i></td>
                 <td>
-                    <button type="button" class="btn btn-primary"><i class="far fa-eye"></i></button>
-                    <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                    <button type="button" class="btn btn-primary" (click)="verDisponibilidad()"><i class="far fa-eye"></i></button>
+                    <button type="button" class="btn btn-danger" (click)="borrarDisponibilidad()"><i class="far fa-trash-alt"></i></button>
                 </td>
             </tr>
         </tbody>

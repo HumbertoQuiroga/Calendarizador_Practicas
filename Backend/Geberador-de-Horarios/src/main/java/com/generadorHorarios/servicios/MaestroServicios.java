@@ -41,6 +41,11 @@ public final class MaestroServicios {
         return maestroRepo.findAll();
     }
     
+    public Maestro buscarMaestroPorNombre(String nombres){
+        return maestroRepo.findMaestroByNombres(nombres)
+               .orElseThrow(() -> new MaestroNotFoundException(nombres));
+    }
+    
     public Maestro buscarMestroPorID(String id){
         return maestroRepo.findMaestroById(id)
                .orElseThrow(() -> new MaestroNotFoundException(id));

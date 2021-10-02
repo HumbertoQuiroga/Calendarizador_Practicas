@@ -43,10 +43,18 @@ public class MaestrosController {
         return new ResponseEntity<>(maestros, HttpStatus.OK);
     }
     
-    @GetMapping("/{id}")
-    public ResponseEntity<Maestro> obtenersMaestroPorID(@PathVariable("id") String id){
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Maestro> obtenerMaestroPorID(@PathVariable("id") String id){
         try{
             Maestro maestro = maestroServicios.buscarMestroPorID(id);
+            return new ResponseEntity<>(maestro, HttpStatus.OK);
+        }catch(MaestroNotFoundException e){return new ResponseEntity<>(HttpStatus.NO_CONTENT);}
+    }
+    
+     @GetMapping("/nombres/{nombres}")
+    public ResponseEntity<Maestro> obtenerMaestroPorNombre(@PathVariable("nombres") String nombres){
+        try{
+            Maestro maestro = maestroServicios.buscarMaestroPorNombre(nombres);
             return new ResponseEntity<>(maestro, HttpStatus.OK);
         }catch(MaestroNotFoundException e){return new ResponseEntity<>(HttpStatus.NO_CONTENT);}
     }

@@ -16,6 +16,14 @@ export class MaestrosService {
   getMaestros(): Observable<any> {
     return this._httpClient.get<any>(this._url);
   }
+
+  getMaestroPorNombre(nombre: string): Observable<any> {
+    return this._httpClient.get<any>(`${this._url}/nombres/${nombre}`);
+  }
+
+  getMaestroPorId(id: string): Observable<any> {
+    return this._httpClient.get<any>(`${this._url}/id/${id}`);
+  }
 }
 
 

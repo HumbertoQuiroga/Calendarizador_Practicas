@@ -15,4 +15,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface MaestroRepo extends JpaRepository<Maestro, String>{
     Optional<Maestro> findMaestroById(String id);
+    Optional<Maestro> findMaestroByNombres(String nombres);
 }

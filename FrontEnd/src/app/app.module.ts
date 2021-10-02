@@ -9,6 +9,10 @@ import { RegistroComponent } from './auth/registro/registro.component';
 import { CalendarioComponent } from './calendario/calendario.component';
 import { MainComponent } from './main/main.component';
 import { MaestrosCrudComponent } from './maestros/maestros-crud/maestros-crud.component';
+import { FormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 
@@ -25,7 +29,10 @@ import { MaestrosCrudComponent } from './maestros/maestros-crud/maestros-crud.co
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
