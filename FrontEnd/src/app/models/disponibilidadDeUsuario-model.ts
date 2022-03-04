@@ -1,6 +1,6 @@
 export interface DisponibilidadDeUsuario {
-    id?: string;
-    nombres?: string;
-    apellidos?: string;
-    disponibilidad: string;
+    id?: String;
+    nombres?: String;
+    apellidos?: String;
+    disponibilidad: String;
 }

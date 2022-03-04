@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,6 +56,8 @@ public class MaestrosController {
     public ResponseEntity<Maestro> obtenerMaestroPorNombre(@PathVariable("nombres") String nombres){
         try{
             Maestro maestro = maestroServicios.buscarMaestroPorNombre(nombres);
+            maestroServicios.agregarMaestroAlArreglo(maestro);
+            maestroServicios.almacenarMaestro();
             return new ResponseEntity<>(maestro, HttpStatus.OK);
         }catch(MaestroNotFoundException e){return new ResponseEntity<>(HttpStatus.NO_CONTENT);}
     }
@@ -66,6 +69,17 @@ public class MaestrosController {
         maestroServicios.agregarMaestroAlArreglo(maestro);
         maestroServicios.almacenarMaestro();
         return new ResponseEntity<>(new_maestro, HttpStatus.CREATED);
+    }
+    
+    @PutMapping("/maestros")
+    public ResponseEntity<Maestro> updateMaestroPorID(@RequestBody Maestro maestro){
+        try{
+            Maestro new_maestro = maestroServicios.agregarMaestro(maestro);
+            
+            maestroServicios.agregarMaestroAlArreglo(maestro);
+            maestroServicios.almacenarMaestro();
+            return new ResponseEntity<>(maestro, HttpStatus.OK);
+        }catch(MaestroNotFoundException e){return new ResponseEntity<>(HttpStatus.NO_CONTENT);}
     }
     
 }

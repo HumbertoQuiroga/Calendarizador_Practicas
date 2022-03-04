@@ -1,0 +1,15 @@
+<div mat-dialog-content>
+    <div class="modal-header">
+        
+        <h5 class="modal-title" id="exampleModalLabel">Advertencia!</h5>
+    </div>
+    <div class="modal-body">
+        <p>Estas seguro de borrar la disponibilidad del maestro?</p>
+        <p>{{nombreCompleto}}</p>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onClickNO()">Cerrar</button>
+    <button type="button" class="btn btn-danger" [mat-dialog-close]="true">Borrar</button>
+</div>

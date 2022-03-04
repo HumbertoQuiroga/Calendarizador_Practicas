@@ -65,7 +65,7 @@ public final class MaestroServicios {
    }
 
     public void almacenarMaestro() {
-        File archivo = new File("D:\\Proyecto Practicas\\Calendarizador_Practicas\\Otros\\CalendarizadorMaestrosFrame\\tabMaes.dat");
+        File archivo = new File("D:\\Escritorio\\Escuela\\Proyecto Practicas\\Calendarizador_Practicas\\Otros\\CalendarizadorMaestrosFrame\\tabMaes.dat");
         int longitud = listaMaestros.size();
         DataOutput archSalida;
         try {

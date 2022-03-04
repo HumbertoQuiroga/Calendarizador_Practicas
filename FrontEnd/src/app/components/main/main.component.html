@@ -8,21 +8,21 @@
 
 <body>
     <div>
-        <div>
-            <nav class="navbar navbar-light ">
-                <a class="navbar-brand">
-                    <img src="../../assets/logo.png" width="120" height="40" alt="navbar logo"
-                        routerLink="/calendarizador">
-                </a>
+          <nav class="navbar navbar-light ">
+                
                 <div class="container d-flex flex-row-reverse">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <button class="btn btn-primary" (click)="goToLogin()">Salir</button>
                         </li>
                     </ul>
+                    
+                    <a class="navbar-brand">
+                        <img src="../../assets/logo.png" width="120" height="40" alt="navbar logo"
+                            routerLink="/index/calendarizador">
+                    </a>
                 </div>
             </nav>
-        </div>
         <main>
             <app-root></app-root>
         </main>

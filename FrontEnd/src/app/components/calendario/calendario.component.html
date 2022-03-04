@@ -3,13 +3,13 @@
     <form>
       <div class="row">
         <div class="col">
-          <input id="id_maestro" max="11" type="text" (change)="buscarMaestro()" class="form-control" placeholder="ID">
+          <input type="text" [(ngModel)]="maestro.id" [ngModelOptions]="{standalone: true}" max="11" min="11" (change)="buscarMaestro()" class="form-control" placeholder="ID" >
         </div>
         <div class="col">
-          <input id="nombres_maestro" type="text" class="form-control" placeholder="Nombres">
+          <input type="text" [(ngModel)]="maestro.nombres" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Nombres" value={{maestro.nombres}}>
         </div>
         <div class="col">
-          <input id="apellidos_maestro" type="text" class="form-control" placeholder="Apellidos">
+          <input type="text" [(ngModel)]="maestro.apellidos" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Apellidos" value={{maestro.apellidos}}>
         </div>
       </div>
     </form>
@@ -23,8 +23,8 @@
     <tbody *ngFor="let disponiblididad of disponibilidades" id={{disponiblididad.id}}>
       <tr id="0">
           <th id={{disponiblididad.id}} rowspan="2" scope="row">{{disponiblididad.hora}}</th>
-          <td class={{disponiblididad.disponibilidad[0].datos[0][0].css}} (click)="onClick(disponiblididad, 0,0)" id=1>{{disponiblididad.disponibilidad[0].datos[0][0].dato}}</td>
-          <td class={{disponiblididad.disponibilidad[0].datos[0][1].css}} (click)="onClick(disponiblididad, 0,1)" id=3>{{disponiblididad.disponibilidad[0].datos[0][1].dato}}</td>
+          <td (mousedown)="onSelect(disponiblididad, 0,0)" class={{disponiblididad.disponibilidad[0].datos[0][0].css}} (click)="onClick(disponiblididad, 0,0)" id=1>{{disponiblididad.disponibilidad[0].datos[0][0].dato}}</td>
+          <td (mouseup)="onUnselect(disponiblididad, 0,1)" class={{disponiblididad.disponibilidad[0].datos[0][1].css}} (click)="onClick(disponiblididad, 0,1)" id=3>{{disponiblididad.disponibilidad[0].datos[0][1].dato}}</td>
           <td class={{disponiblididad.disponibilidad[0].datos[0][2].css}} (click)="onClick(disponiblididad, 0,2)" id=5>{{disponiblididad.disponibilidad[0].datos[0][2].dato}}</td>
           <td class={{disponiblididad.disponibilidad[0].datos[0][3].css}} (click)="onClick(disponiblididad, 0,3)" id=7>{{disponiblididad.disponibilidad[0].datos[0][3].dato}}</td>
           <td class={{disponiblididad.disponibilidad[0].datos[0][4].css}} (click)="onClick(disponiblididad, 0,4)" id=9>{{disponiblididad.disponibilidad[0].datos[0][4].dato}}</td>
@@ -39,7 +39,7 @@
     </tbody>
   </table>
   <div class="container">
-    <button class="btn btn-primary" (click)="enviarDisponibilidad()">Enviar</button>
+    <button class="btn btn-primary" (click)="enviarDisponibilidad()">Guardar</button>
     <button class="btn btn-secondary" (click)="verListadoMaestros()">Ver registros</button>
     <!-- <button class="btn btn-outline-secondary" style="margin-left: 1%;" routerLink='/'>Descargar</button> -->
   </div>

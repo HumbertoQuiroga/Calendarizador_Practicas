@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Disponibilidad } from '../models/disponibilidad-model';
-import { Dia } from '../models/dia-model';
-import { DisponibilidadDeUsuario as Maestro } from '../models/disponibilidadDeUsuario-model';
-import { Router, RouterLink } from '@angular/router';
-import axios from 'axios';
+import { Disponibilidad } from '../../models/disponibilidad-model';
+import { Dia } from '../../models/dia-model';
+import { DisponibilidadDeUsuario as Maestro } from '../../models/disponibilidadDeUsuario-model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MaestrosService } from 'src/app/services/maestros.service';
+import { NotificationService } from 'src/app/notification.service'
 
 @Component({
   selector: 'app-calendario',
@@ -14,9 +15,10 @@ export class CalendarioComponent implements OnInit {
 
   constructor(
     private readonly _router: Router,
+    private readonly _maestrosService: MaestrosService,
+    private readonly _notification: NotificationService,
+    private readonly _ac: ActivatedRoute
   ) {}
-
-  disponibilidadCode = ""
 
   dias: Dia [] = [
     {dia: "Horas"},
@@ -45,20 +47,37 @@ export class CalendarioComponent implements OnInit {
     {id: 14 ,hora: "20:00 - 21:00", disponibilidad:[{datos:[[{css:"disponibilidadNormal", dato:"0"}, {css:"disponibilidadNormal", dato:"0"}, {css:"disponibilidadNormal", dato:"0"}, {css:"disponibilidadNormal", dato:"0"}, {css:"disponibilidadNormal", dato:"0"}],[{css:"disponibilidadNormal", dato:"0"}, {css:"disponibilidadNormal", dato:"0"}, {css:"disponibilidadNormal", dato:"0"}, {css:"disponibilidadNormal", dato:"0"}, {css:"disponibilidadNormal", dato:"0"}]]}]},
   ]
  cont = 0
-  onClick(disponibilidad: Disponibilidad, columna: number, dia: number){
+
+ casillaSeleccionada = -1;
+ 
+  onClick(disponibilidad: Disponibilidad, fila: number, dia: number){
     
-    if(disponibilidad.disponibilidad[0].datos[columna][dia].dato === "1"){
-       disponibilidad.disponibilidad[0].datos[columna][dia].dato = "0";
-       disponibilidad.disponibilidad[0].datos[columna][dia].css = "disponibilidadNormal"
+    if(disponibilidad.disponibilidad[0].datos[fila][dia].dato === "1"){
+       disponibilidad.disponibilidad[0].datos[fila][dia].dato = "0";
+       disponibilidad.disponibilidad[0].datos[fila][dia].css = "disponibilidadNormal"
     }else{ 
-      disponibilidad.disponibilidad[0].datos[columna][dia].dato = "1";
-      disponibilidad.disponibilidad[0].datos[columna][dia].css = "disponibilidadVerde"
+      disponibilidad.disponibilidad[0].datos[fila][dia].dato = "1";
+      disponibilidad.disponibilidad[0].datos[fila][dia].css = "disponibilidadVerde"
     }
-    //console.log("ID: "+disponibilidad.id+ ", columna: "+columna+", dia: "+dia+", Disponibilidad: "+ disponibilidad.disponibilidad[0].datos[columna][0].dato, disponibilidad.disponibilidad[0].datos[columna][1].dato, disponibilidad.disponibilidad[0].datos[columna][2].dato, disponibilidad.disponibilidad[0].datos[columna][3].dato, disponibilidad.disponibilidad[0].datos[columna][4].dato)
+  }
+
+  onSelect(disponibilidad: Disponibilidad, fila: number, dia: number){
+    this.onClick(disponibilidad, fila, dia)
+    console.log("selecciono")
+    console.log("disponibilidad: "+disponibilidad)
+    console.log("fila: "+fila)
+    console.log("dia: "+dia)
+  }
+
+  onUnselect(disponibilidad: Disponibilidad, fila: number, dia: number){
+    console.log("deseleccion")
+    console.log("disponibilidad: "+disponibilidad)
+    console.log("fila: "+fila)
+    console.log("dia: "+dia)
   }
 
   maestro: Maestro={
-    id:"",
+    id:'',
     nombres:"",
     apellidos:"",
     disponibilidad:""
@@ -67,38 +86,36 @@ export class CalendarioComponent implements OnInit {
   esEdit = false;
 
   async buscarMaestro(){
-    let id_Maestro = (document.getElementById("id_maestro") as HTMLInputElement).value;
-    const find_maestro = await axios.get('http://localhost:8080/maestro/'+id_Maestro);
-    if(find_maestro.status === 200){
-      (document.getElementById("nombres_maestro") as HTMLInputElement).value = find_maestro.data.nombres;
-      (document.getElementById("apellidos_maestro") as HTMLInputElement).value = find_maestro.data.apellidos;
-      this.asignarDisponibilidadPorCodigo(find_maestro.data.disponibilidad);
-      this.esEdit = true;
-    }else{
-      (document.getElementById("nombres_maestro") as HTMLInputElement).value = '';
-      (document.getElementById("apellidos_maestro") as HTMLInputElement).value = '';
-      this.asignarDisponibilidadPorCodigo("00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
-      this.esEdit = false;
-    }
+    this._maestrosService.getMaestroPorId(String(this.maestro.id)).subscribe((res) => {
+      if(res != null){
+        this.maestro = res
+        this.asignarDisponibilidadPorCodigo(this.maestro.disponibilidad);
+      }else{
+        this.maestro.nombres = "";
+        this.maestro.apellidos = "";
+        this.asignarDisponibilidadPorCodigo(this._maestrosService.disponibilidadDefault);
+      }
+    }, error => console.error("Error al encontrar el usuario"))
   }
   
+  async buscarMaestroID(id: String){
+    this._maestrosService.getMaestroPorId(String(id)).subscribe((res) => {
+      if(res != null){
+        this.maestro = res
+        this.asignarDisponibilidadPorCodigo(this.maestro.disponibilidad);
+      }else{
+        this.maestro.nombres = "";
+        this.maestro.apellidos = "";
+        this.asignarDisponibilidadPorCodigo(this._maestrosService.disponibilidadDefault);
+      }
+    }, error => console.error("Error al encontrar el usuario"))
+  }
 
   async enviarDisponibilidad (){
-    this.generarCodigoDisponibilidad();
-    this.maestro.id =  (document.getElementById("id_maestro") as HTMLInputElement).value;
-    this.maestro.nombres = (document.getElementById("nombres_maestro") as HTMLInputElement).value;
-    this.maestro.apellidos = (document.getElementById("apellidos_maestro") as HTMLInputElement).value;
-    this.maestro.disponibilidad = this.disponibilidadCode;
-    
-    await axios.post('http://localhost:8080/maestro', this.maestro)
-        .then((res)=>{
-            if(res){
-              if(this.esEdit === true){alert("El maestro fue actualizado correctamente!");}
-              else{alert("El maestro fue agregado correctamente!");}
-            }
-        }).catch((err)=>{
-          console.log(err);
-        });
+    this.maestro.disponibilidad = this.generarCodigoDisponibilidad();
+    this._maestrosService.addMaestro(this.maestro).subscribe(res =>{
+      this._notification.showSuccess("El maestro se agrego correctamente!","EXITO");
+    }, error => this._notification.showError("No se pudo agregar","ERROR"))
   }
 
   asignarDisponibilidadPorCodigo(disponibilidad:String){
@@ -116,14 +133,15 @@ export class CalendarioComponent implements OnInit {
   }
 
   generarCodigoDisponibilidad(){
-    this.disponibilidadCode = "";
+    let disponibilidadCode = "";
     this.disponibilidades.forEach(element => {
       for(let cont1 in [0,1]){
         for(let cont2 in [0,1,2,3,4]){
-          this.disponibilidadCode = this.disponibilidadCode+element.disponibilidad[0].datos[cont1][cont2].dato;
+          disponibilidadCode = disponibilidadCode+element.disponibilidad[0].datos[cont1][cont2].dato;
         }
       }
      });
+     return disponibilidadCode
   }
 
   verListadoMaestros(){
@@ -131,7 +149,10 @@ export class CalendarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this._ac.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if(id != null){ this.buscarMaestroID(id)}
+    })
   }
 
 }

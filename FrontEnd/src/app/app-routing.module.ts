@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './auth/login/login.component';
-import { RegistroComponent } from './auth/registro/registro.component';
-import { CalendarioComponent } from './calendario/calendario.component';
-import { MaestrosCrudComponent } from './maestros/maestros-crud/maestros-crud.component';
-import { MainComponent } from './main/main.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { RegistroComponent } from './components/auth/registro/registro.component';
+import { CalendarioComponent } from './components/calendario/calendario.component';
+import { MaestrosCrudComponent } from './components/maestros/maestros-crud.component';
+import { MainComponent } from './components/main/main.component';
 
 const routes: Routes = [
   {
@@ -21,6 +21,10 @@ const routes: Routes = [
     children: [
       {
         path: 'calendarizador',
+        component: CalendarioComponent
+      },
+      {
+        path: 'calendarizador/:id',
         component: CalendarioComponent
       },
       {

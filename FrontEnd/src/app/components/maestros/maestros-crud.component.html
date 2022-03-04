@@ -1,0 +1,53 @@
+<div class="container">
+        <div class="input-group">
+            <select [(ngModel)]="tipoBusqueda" (change)="cambiarTipoBusqueda()" class="form-select" aria-label="Default select example">
+                <option value="mostrarTodos">Mostrar Todos Los Maestros</option>
+                <option value="porID">Buscar por ID</option>
+                <option value="porNombre">Buscar por Nombres</option>
+            </select>
+
+            <input *ngIf="tipoBusqueda == 'mostrarTodos'" type="search" class="form-control rounded" placeholder="" aria-label="Search" aria-describedby="search-addon" disabled/>
+            <input *ngIf="tipoBusqueda == 'porID'" (keyup)="buscarMaestro()" type="search" [(ngModel)]="busqueda" class="form-control rounded" placeholder="Ingresa el ID del maestro" aria-label="Search" aria-describedby="search-addon"/>
+            <input *ngIf="tipoBusqueda == 'porNombre'" (keyup)="buscarMaestro()" type="search" [(ngModel)]="busqueda" class="form-control rounded" placeholder="Ingresa el Nombre del maestro" aria-label="Search" aria-describedby="search-addon"/>
+            <div class="btn-toolbar">
+                <button type="button" class="btn btn-primary" (click)="buscarMaestro()">Buscar</button>
+            </div>
+        </div>
+</div>
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre Completo</th>
+                <th scope="col">Disponibilidad</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let maestro of listaMaestros">
+                <td>{{maestro.id}}</td>
+                <td>{{maestro.apellidos}} {{maestro.nombres}}</td>
+                <td *ngIf="maestro.disponibilidad == dispoDefault">
+                    <div class="container-icon-red">
+                        <i class="fas fa-calendar-times"></i>
+                    </div>
+                </td>
+                <td *ngIf="maestro.disponibilidad != dispoDefault">
+                    <div class="container-icon-green">
+                        <i  class="fas fa-calendar-check"></i>
+                    </div>
+                </td>
+                <td *ngIf="maestro.disponibilidad == dispoDefault">
+                    <button type="button" class="btn btn-primary" (click)="verDisponibilidad(maestro.id)"><i class="far fa-eye"></i></button>
+                    <button type="button" class="btn btn-danger" disabled (click)="openDialog(maestro)"><i class="far fa-trash-alt"></i></button>
+                </td>
+                <td *ngIf="maestro.disponibilidad != dispoDefault">
+                    <button type="button" class="btn btn-primary" (click)="verDisponibilidad(maestro.id)"><i class="far fa-eye"></i></button>
+                    <button type="button" class="btn btn-danger" (click)="openDialog(maestro)"><i class="far fa-trash-alt"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-primary" (click)="atras()">Atras</button>
+</div>
